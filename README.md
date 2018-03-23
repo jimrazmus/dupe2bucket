@@ -32,7 +32,7 @@ Your bucket will contain log files and state files after a successful run.
 
 {bucket-prefix}/Logs/{db instance arn}/YYYY/ISOWeek/{log file name}
 
-These will contain whatever RDS logged to the respective file.
+These objects will contain whatever RDS logged to the respective file.
 
 ### State Files
 
