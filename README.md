@@ -23,3 +23,23 @@ Copy only logs with 'error' in their name for a specific RDS instance identifier
 Copy all logs from all instances to YourBucket with a object name prefix. Note that successive runs will only copy logs that have been written to since the last run.
 
     dupe2bucket -bucket=YourBucket -bucket-prefix="some/prefix"
+
+## Bucket Contents
+
+Your bucket will contain log files and state files after a successful run.
+
+### Log Files
+
+{bucket-prefix}/{db instance arn}/YYYY/ISOWeek/{log file name}
+
+These will contain whatever RDS logged to the respective file.
+
+### State Files
+
+{bucket-prefix}/LastWrittenState/{db instance arn}
+
+Note that state files, once created, only have their "lastWritten" tag value changed. The value of the tag limits successive copies to logs with more recent writes. Removing the tag, or the file, will cause dupe2bucket to run a complete copy of all logs in scope.
+
+## Bucket Lifecycle
+
+Lifecycle policies should refrain from making any changes to the state file objects.
