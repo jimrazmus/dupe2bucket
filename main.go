@@ -286,7 +286,7 @@ func main() {
 		fmt.Println("Copying logs for:", dbarn)
 
 		// retrieve lastWrite state for the dbarn
-		s := []string{*bucket_prefix, "LastWrittenState", dbarn}
+		s := []string{*bucket_prefix, "State", dbarn}
 		state_key := strings.Join(s, "/")
 		lastWrite, err := S3GetState(s3_client, *bucket, state_key)
 		if err != nil {
@@ -317,7 +317,7 @@ func main() {
 				break
 			}
 
-			s = []string{*bucket_prefix, dbarn, year, week, logname}
+			s = []string{*bucket_prefix, "Logs", dbarn, year, week, logname}
 			object_key := strings.Join(s, "/")
 			err = S3upload(uploader, *bucket, object_key, logdata)
 			if err != nil {

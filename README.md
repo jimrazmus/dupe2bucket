@@ -30,15 +30,15 @@ Your bucket will contain log files and state files after a successful run.
 
 ### Log Files
 
-{bucket-prefix}/{db instance arn}/YYYY/ISOWeek/{log file name}
+{bucket-prefix}/Logs/{db instance arn}/YYYY/ISOWeek/{log file name}
 
 These will contain whatever RDS logged to the respective file.
 
 ### State Files
 
-{bucket-prefix}/LastWrittenState/{db instance arn}
+{bucket-prefix}/State/{db instance arn}
 
-Note that state files, once created, only have their "lastWritten" tag value changed. The value of the tag limits successive copies, choosing only the logs with more recent writes. Removing the tag, or the file, will cause dupe2bucket to run a complete copy of all logs in scope.
+Note that state files, once created, only have their tag values changed. The values limit successive copies, choosing only the logs with more recent writes. Removing the tags, or the file, will cause dupe2bucket to run a complete copy of all logs in scope.
 
 ## Bucket Lifecycle
 
