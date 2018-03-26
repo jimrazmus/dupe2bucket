@@ -4,7 +4,7 @@ Copies RDS Log Files to an S3 bucket.
 
 ## Usage
 
-Copy all logs from all instances to YourBucket. Note that successive runs will only copy logs that have been written to since the last run.
+Copy all logs from all instances to YourBucket.
 
     dupe2bucket -bucket=YourBucket
 
@@ -20,9 +20,13 @@ Copy only logs with 'error' in their name for a specific RDS instance identifier
 
     dupe2bucket -bucket=YourBucket -instance=YourRDSInstance -filter_fn=error
 
-Copy all logs from all instances to YourBucket with an object name prefix. Note that successive runs will only copy logs that have been written to since the last run.
+Copy all logs from all instances to YourBucket with an object name prefix.
 
     dupe2bucket -bucket=YourBucket -bucket-prefix="some/prefix"
+
+## Copy Behavior
+
+All logs in scope are copied by default. However, successive runs will only copy logs that have been written to since the last run. State files (see below) limit successive runs to choosing only the logs with more recent writes.
 
 ## Bucket Contents
 
@@ -38,7 +42,7 @@ These objects will contain whatever RDS logged to the respective file.
 
 {bucket-prefix}/State/{db instance arn}
 
-Note that state files, once created, only have their tag values changed. The values limit successive copies, choosing only the logs with more recent writes. Removing the tags, or the file, will cause dupe2bucket to run a complete copy of all logs in scope.
+These objects are state files who, once created, only have their tag values changed. Removing the tags, or the file, will cause dupe2bucket to run a complete copy of all logs in scope.
 
 ## Bucket Lifecycle
 
