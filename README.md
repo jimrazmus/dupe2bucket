@@ -47,3 +47,11 @@ These objects are state files who, once created, only have their tag values chan
 ## Bucket Lifecycle
 
 Lifecycle policies should refrain from making any changes to the state file objects.
+
+## Limitations
+
+The RDS API method [DownloadDBLogFilePortion](https://docs.aws.amazon.com/sdk-for-go/api/service/rds/) is limited to 1 MB per request. Large log files will require multiple RDS API requests.
+
+dupe2bucket uses an in-memory structure to temporarily hold log file data. Copying very large log files may exceed the available RAM of the host executing dupe2bucket. In those cases, the host may begin to use swap space which may be considerably slower than RAM.
+
+Log files are copied one at time given the current model of using RAM.
